@@ -24,7 +24,7 @@ default_args = {
     # 'end_date': datetime(2016, 1, 1),
 }
 
-dag = DAG('Hello_Kubernetes_Operator_DAG', default_args=default_args, schedule_interval=None)
+dag = DAG('out-cluster', default_args=default_args, schedule_interval=None)
 
 # namespace = configuration.conf.get("kubernetes","namespace")
 namespace = "nautilus-airflow"
