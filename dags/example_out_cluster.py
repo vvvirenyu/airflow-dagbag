@@ -27,6 +27,7 @@ default_args = {
 dag = DAG('out-cluster', default_args=default_args, schedule_interval=None)
 
 # namespace = configuration.conf.get("kubernetes","namespace")
+# config_file="/opt/airflow/.kube/config/out-config",
 namespace = "nautilus-airflow"
 
 t1 = KubernetesPodOperator(
@@ -49,7 +50,6 @@ t2 = KubernetesPodOperator(
     name="echo4",
     in_cluster=False,
     cluster_context="james-howlett",
-    config_file="/opt/airflow/.kube/config/out-config",
     task_id="echo4",
     is_delete_operator_pod=False,
     dag=dag
