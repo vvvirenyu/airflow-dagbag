@@ -34,9 +34,9 @@ t1 = KubernetesPodOperator(
     image="alpine/k8s:1.20.7",
     cmds=["bash", "-cx"],
     arguments=["echo", "$(helm --version)"],
-    name="echo",
+    name="echo3",
     in_cluster=True,
-    task_id="echo",
+    task_id="echo3",
     is_delete_operator_pod=False,
     dag=dag
 )
@@ -46,11 +46,11 @@ t2 = KubernetesPodOperator(
     image="alpine/k8s:1.20.7",
     cmds=["bash", "-cx"],
     arguments=["echo", "$(helm --version)"],
-    name="echo",
+    name="echo4",
     in_cluster=False,
     cluster_context="james-howlett",
     config_file="/opt/airflow/.kube/config",
-    task_id="echo",
+    task_id="echo4",
     is_delete_operator_pod=False,
     dag=dag
 )
