@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from airflow import configuration
 from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
 from airflow.models import DAG
+import os
 
 default_args = {
     'owner': 'airflow',
@@ -29,6 +30,8 @@ dag = DAG('out-cluster', default_args=default_args, schedule_interval=None)
 # namespace = configuration.conf.get("kubernetes","namespace")
 # config_file="/opt/airflow/.kube/config/out-config",
 namespace = "nautilus-airflow"
+airflow_home = os.environ["AIRFLOW_HOME"]
+kubeconfig_file = f"{airflow_home}/sa-config.yaml"
 
 t3 = KubernetesPodOperator(
     namespace=namespace,
@@ -80,7 +83,7 @@ t6 = KubernetesPodOperator(
     name="echo6",
     in_cluster=False,
     cluster_context="james-howlett",
-        config_file="/opt/airflow/sa-config.yaml",
+    config_file=kubeconfig_file,
     task_id="echo6",
     is_delete_operator_pod=False,
     dag=dag
@@ -95,8 +98,8 @@ t7 = KubernetesPodOperator(
     arguments=["echo $(helm version --client --short)"],
     name="echo7",
     in_cluster=False,
-    cluster_context="james-howlett",
-    config_file="~/.kube/config",
+    cluster_context="human-torch",
+    config_file="/home/sa-config.yaml",
     task_id="echo7",
     is_delete_operator_pod=False,
     dag=dag
@@ -110,7 +113,7 @@ t8 = KubernetesPodOperator(
     name="echo8",
     in_cluster=False,
     cluster_context="human-torch",
-    config_file="~/.kube/config",
+    config_file="$HOME/sa-config.yaml",
     task_id="echo8",
     is_delete_operator_pod=False,
     dag=dag
@@ -124,7 +127,7 @@ t9 = KubernetesPodOperator(
     name="echo9",
     in_cluster=False,
     cluster_context="human-torch",
-    config_file="/home/virentu/.kube/config",
+    config_file="$AIRFLOW_HOME/sa-config.yaml",
     task_id="echo9",
     is_delete_operator_pod=False,
     dag=dag
