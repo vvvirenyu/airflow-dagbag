@@ -50,6 +50,7 @@ t2 = KubernetesPodOperator(
     name="echo4",
     in_cluster=False,
     cluster_context="james-howlett",
+    config_file="/home/airflow/.kube/config",
     task_id="echo4",
     is_delete_operator_pod=False,
     dag=dag
