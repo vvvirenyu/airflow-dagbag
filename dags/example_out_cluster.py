@@ -30,7 +30,7 @@ dag = DAG('out-cluster', default_args=default_args, schedule_interval=None)
 # config_file="/opt/airflow/.kube/config/out-config",
 namespace = "nautilus-airflow"
 
-t1 = KubernetesPodOperator(
+t3 = KubernetesPodOperator(
     namespace=namespace,
     image="alpine/k8s:1.20.7",
     cmds=["bash", "-cx"],
@@ -42,17 +42,63 @@ t1 = KubernetesPodOperator(
     dag=dag
 )
 
-t2 = KubernetesPodOperator(
+t4 = KubernetesPodOperator(
     namespace=namespace,
     image="alpine/k8s:1.20.7",
     cmds=["bash", "-cx"],
-    arguments=["echo", "10"],
+    arguments=["echo $(helm version --client --short)"],
     name="echo4",
     in_cluster=False,
     cluster_context="human-torch",
-    config_file="~/.kube/config",
     task_id="echo4",
     is_delete_operator_pod=False,
     dag=dag
 )
-t1.set_downstream(t2)
+
+
+
+
+t5 = KubernetesPodOperator(
+    namespace=namespace,
+    image="alpine/k8s:1.20.7",
+    cmds=["bash", "-cx"],
+    arguments=["echo $(helm version --client --short)"],
+    name="echo5",
+    in_cluster=False,
+    cluster_context="human-torch",
+    config_file="/home/airflow/.kube/config"
+    task_id="echo5",
+    is_delete_operator_pod=False,
+    dag=dag
+)
+
+t6 = KubernetesPodOperator(
+    namespace=namespace,
+    image="alpine/k8s:1.20.7",
+    cmds=["bash", "-cx"],
+    arguments=["echo $(helm version --client --short)"],
+    name="echo6",
+    in_cluster=False,
+    cluster_context="james-howlett",
+    task_id="echo6",
+    is_delete_operator_pod=False,
+    dag=dag
+)
+
+
+
+t7 = KubernetesPodOperator(
+    namespace=namespace,
+    image="alpine/k8s:1.20.7",
+    cmds=["bash", "-cx"],
+    arguments=["echo $(helm version --client --short)"],
+    name="echo7",
+    in_cluster=False,
+    cluster_context="james-howlett",
+    config_file="/home/airflow/.kube/config"
+    task_id="echo7",
+    is_delete_operator_pod=False,
+    dag=dag
+)
+
+t3 >> [t4, t5, t6, t7]
