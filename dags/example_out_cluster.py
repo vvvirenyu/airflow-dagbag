@@ -102,4 +102,32 @@ t7 = KubernetesPodOperator(
     dag=dag
 )
 
-t3 >> [t4, t5, t6, t7]
+t8 = KubernetesPodOperator(
+    namespace=namespace,
+    image="alpine/k8s:1.20.7",
+    cmds=["bash", "-cx"],
+    arguments=["echo $(helm version --client --short)"],
+    name="echo8",
+    in_cluster=False,
+    cluster_context="human-torch",
+    config_file="~/.kube/config",
+    task_id="echo8",
+    is_delete_operator_pod=False,
+    dag=dag
+)
+
+t9 = KubernetesPodOperator(
+    namespace=namespace,
+    image="alpine/k8s:1.20.7",
+    cmds=["bash", "-cx"],
+    arguments=["echo $(helm version --client --short)"],
+    name="echo9",
+    in_cluster=False,
+    cluster_context="human-torch",
+    config_file="/home/virentu/.kube/config",
+    task_id="echo9",
+    is_delete_operator_pod=False,
+    dag=dag
+)
+
+t3 >> [t4, t5, t6, t7, t8, t9]
