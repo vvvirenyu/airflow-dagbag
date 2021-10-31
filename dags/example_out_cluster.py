@@ -31,7 +31,7 @@ dag = DAG('out-cluster', default_args=default_args, schedule_interval=None)
 # config_file="/opt/airflow/.kube/config/out-config",
 namespace = "nautilus-airflow"
 airflow_home = os.environ["AIRFLOW_HOME"]
-kubeconfig_file = f"{airflow_home}/sa-config.yaml"
+kubeconfig_file = f"{airflow_home}/.kube/config"
 
 t3 = KubernetesPodOperator(
     namespace=namespace,
@@ -127,7 +127,7 @@ t9 = KubernetesPodOperator(
     name="echo9",
     in_cluster=False,
     cluster_context="human-torch",
-    config_file="$AIRFLOW_HOME/sa-config.yaml",
+    config_file="/home/virentu/.kube/config",
     task_id="echo9",
     is_delete_operator_pod=False,
     dag=dag
