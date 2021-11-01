@@ -70,7 +70,7 @@ t5 = KubernetesPodOperator(
     name="echo5",
     in_cluster=False,
     cluster_context="human-torch",
-    config_file="/opt/airflow/sa-config.yaml",
+    config_file="/opt/airflow/dags/repo/sa-config",
     task_id="echo5",
     is_delete_operator_pod=False,
     dag=dag
@@ -84,7 +84,7 @@ t6 = KubernetesPodOperator(
     name="echo6",
     in_cluster=False,
     cluster_context="human-torch",
-    config_file=kubeconfig_file,
+    config_file="/opt/airflow/dags/repo/sa-config",
     task_id="echo6",
     is_delete_operator_pod=False,
     dag=dag
@@ -127,7 +127,7 @@ t9 = KubernetesPodOperator(
     name="echo9",
     in_cluster=False,
     cluster_context="human-torch",
-    config_file="/home/virentu/.kube/config",
+    config_file="/opt/airflow/dags/repo/sa-config",
     service_account_name="airflow-release-worker",
     task_id="echo9",
     is_delete_operator_pod=False,
@@ -135,4 +135,4 @@ t9 = KubernetesPodOperator(
     dag=dag
 )
 
-t9 >> t3 >> t8 >> [t4, t5, t6, t7]
+t3 >> [t4, t5, t6, t7, t8, t9]
