@@ -42,6 +42,7 @@ t3 = KubernetesPodOperator(
     in_cluster=True,
     task_id="echo3",
     is_delete_operator_pod=False,
+    get_logs=True,
     dag=dag
 )
 
@@ -101,6 +102,7 @@ t7 = KubernetesPodOperator(
         service_account_name="airflow-release-worker",
     task_id="echo7",
     is_delete_operator_pod=False,
+    get_logs=True,
     dag=dag
 )
 
@@ -113,6 +115,7 @@ t8 = KubernetesPodOperator(
     in_cluster=False,
     task_id="echo8",
     is_delete_operator_pod=False,
+    get_logs=True,
     dag=dag
 )
 
@@ -128,6 +131,7 @@ t9 = KubernetesPodOperator(
     service_account_name="airflow-release-worker",
     task_id="echo9",
     is_delete_operator_pod=False,
+    get_logs=True,
     dag=dag
 )
 
