@@ -56,6 +56,7 @@ t4 = KubernetesPodOperator(
     cluster_context="human-torch",
     task_id="echo4",
     is_delete_operator_pod=False,
+    service_account_name="default",
     dag=dag
 )
 
@@ -73,6 +74,7 @@ t5 = KubernetesPodOperator(
     config_file="/opt/airflow/dags/repo/sa-config",
     task_id="echo5",
     is_delete_operator_pod=False,
+    service_account_name="default",
     dag=dag
 )
 
@@ -85,6 +87,7 @@ t6 = KubernetesPodOperator(
     in_cluster=False,
     cluster_context="human-torch",
     config_file="/opt/airflow/dags/repo/sa-config",
+    service_account_name="default",
     task_id="echo6",
     is_delete_operator_pod=False,
     dag=dag
@@ -99,10 +102,10 @@ t7 = KubernetesPodOperator(
     arguments=["echo $(helm version --client --short)"],
     name="echo7",
     in_cluster=False,
-        service_account_name="airflow-release-worker",
     task_id="echo7",
     is_delete_operator_pod=False,
     get_logs=True,
+    service_account_name="default",
     dag=dag
 )
 
@@ -116,6 +119,7 @@ t8 = KubernetesPodOperator(
     task_id="echo8",
     is_delete_operator_pod=False,
     get_logs=True,
+    service_account_name="default",
     dag=dag
 )
 
@@ -128,10 +132,10 @@ t9 = KubernetesPodOperator(
     in_cluster=False,
     cluster_context="human-torch",
     config_file="/opt/airflow/dags/repo/sa-config",
-    service_account_name="airflow-release-worker",
     task_id="echo9",
     is_delete_operator_pod=False,
     get_logs=True,
+    service_account_name="default",
     dag=dag
 )
 
