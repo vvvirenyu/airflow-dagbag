@@ -135,4 +135,4 @@ t9 = KubernetesPodOperator(
     dag=dag
 )
 
-t3 >> [t4, t5, t6, t7, t8, t9]
+t9 >> t3 >> t8 >> [t4, t5, t6, t7]
