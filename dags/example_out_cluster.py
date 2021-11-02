@@ -135,7 +135,7 @@ t9 = KubernetesPodOperator(
     task_id="echo9",
     is_delete_operator_pod=False,
     get_logs=True,
-    service_account_name="default",
+    service_account_name="airflow-release-worker",
     dag=dag
 )
 
