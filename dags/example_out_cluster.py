@@ -53,7 +53,7 @@ t4 = KubernetesPodOperator(
     arguments=["echo $(helm version --client --short)"],
     name="echo4",
     in_cluster=False,
-    cluster_context="human-torch",
+    cluster_context="blastaar",
     task_id="echo4",
     is_delete_operator_pod=False,
     service_account_name="default",
@@ -70,7 +70,7 @@ t5 = KubernetesPodOperator(
     arguments=["echo $(helm version --client --short)"],
     name="echo5",
     in_cluster=False,
-    cluster_context="human-torch",
+    cluster_context="blastaar",
     config_file="/opt/airflow/dags/repo/sa-config",
     task_id="echo5",
     is_delete_operator_pod=False,
@@ -85,7 +85,7 @@ t6 = KubernetesPodOperator(
     arguments=["echo $(helm version --client --short)"],
     name="echo6",
     in_cluster=False,
-    cluster_context="human-torch",
+    cluster_context="blastaar",
     config_file="/opt/airflow/dags/repo/sa-config",
     service_account_name="default",
     task_id="echo6",
@@ -105,23 +105,11 @@ t7 = KubernetesPodOperator(
     task_id="echo7",
     is_delete_operator_pod=False,
     get_logs=True,
+    cluster_context="blastaar",
     service_account_name="default",
     dag=dag
 )
 
-t8 = KubernetesPodOperator(
-    namespace=namespace,
-    image="alpine/k8s:1.20.7",
-    cmds=["bash", "-cx"],
-    arguments=["echo $(helm version --client --short)"],
-    name="echo8",
-    in_cluster=False,
-    task_id="echo8",
-    is_delete_operator_pod=False,
-    get_logs=True,
-    service_account_name="default",
-    dag=dag
-)
 
 t9 = KubernetesPodOperator(
     namespace=namespace,
@@ -130,7 +118,7 @@ t9 = KubernetesPodOperator(
     arguments=["echo $(helm version --client --short)"],
     name="echo9",
     in_cluster=False,
-    cluster_context="human-torch",
+    cluster_context="blastaar",
     config_file="/opt/airflow/dags/repo/sa-config",
     task_id="echo9",
     is_delete_operator_pod=False,
@@ -139,4 +127,4 @@ t9 = KubernetesPodOperator(
     dag=dag
 )
 
-t3 >> [t4, t5, t6, t7, t8, t9]
+t3 >> [t4, t5, t6, t7, t9]
