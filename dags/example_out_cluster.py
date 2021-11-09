@@ -80,9 +80,9 @@ t5 = KubernetesPodOperator(
 
 t6 = KubernetesPodOperator(
     namespace=namespace,
-    image="devops-repo.isus.emc.com:8116/nautilus/nautilus-kubectl:1.16.12",
+    image="alpine/k8s:1.20.7",
     cmds=["bash", "-cx"],
-    arguments=["echo $(helm version --client --short)"],
+    arguments=["helm repo add bitnami https://charts.bitnami.com/bitnami; sleep 500; helm install my-release bitnami/nginx -n nautilus-airflow; done"],
     name="echo6",
     in_cluster=False,
     cluster_context="the-fury",
@@ -114,7 +114,7 @@ t7 = KubernetesPodOperator(
 
 t9 = KubernetesPodOperator(
     namespace=namespace,
-    image="alpine/k8s:1.20.7",
+    image="devops-repo.isus.emc.com:8116/nautilus/nautilus-kubectl:1.16.12",
     cmds=["bash", "-cx"],
     arguments=["echo $(helm version --client --short)"],
     name="echo9",
