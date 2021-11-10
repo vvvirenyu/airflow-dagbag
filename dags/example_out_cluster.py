@@ -35,9 +35,9 @@ kubeconfig_file = f"{airflow_home}/.kube/config"
 
 t3 = KubernetesPodOperator(
     namespace=namespace,
-    image="vvvirenyu/hello-world:latest",
+    image="vvvirenyu/k8py:latest",
     cmds=["/bin/bash", "-cx"],
-    arguments=["helm install app/helloworld-chart-0.1.0.tgz --name helloworld --namespace nautilus-airflow"],
+    arguments=["helm repo add bitnami https://charts.bitnami.com/bitnami && helm install my-release bitnami/nginx --namespace nautilus-airflow"],
     name="echo3",
     in_cluster=True,
     task_id="echo3",
@@ -46,37 +46,37 @@ t3 = KubernetesPodOperator(
     dag=dag
 )
 
-t4 = KubernetesPodOperator(
-    namespace=namespace,
-    image="alpine/k8s:1.20.7",
-    cmds=["bash", "-cx"],
-    arguments=["echo $(helm version --client --short)"],
-    name="echo4",
-    in_cluster=False,
-    cluster_context="the-fury",
-    task_id="echo4",
-    is_delete_operator_pod=False,
-    service_account_name="default",
-    dag=dag
-)
+# t4 = KubernetesPodOperator(
+#     namespace=namespace,
+#     image="alpine/k8s:1.20.7",
+#     cmds=["bash", "-cx"],
+#     arguments=["echo $(helm version --client --short)"],
+#     name="echo4",
+#     in_cluster=False,
+#     cluster_context="the-fury",
+#     task_id="echo4",
+#     is_delete_operator_pod=False,
+#     service_account_name="default",
+#     dag=dag
+# )
 
 
 
 
-t5 = KubernetesPodOperator(
-    namespace=namespace,
-    image="devops-repo.isus.emc.com:8116/nautilus/nautilus-kubectl:1.16.12",
-    cmds=["bash", "-cx"],
-    arguments=["echo $(helm version --client --short)"],
-    name="echo5",
-    in_cluster=False,
-    cluster_context="the-fury",
-    config_file="/opt/airflow/.kube/config",
-    task_id="echo5",
-    is_delete_operator_pod=False,
-    service_account_name="default",
-    dag=dag
-)
+# t5 = KubernetesPodOperator(
+#     namespace=namespace,
+#     image="devops-repo.isus.emc.com:8116/nautilus/nautilus-kubectl:1.16.12",
+#     cmds=["bash", "-cx"],
+#     arguments=["echo $(helm version --client --short)"],
+#     name="echo5",
+#     in_cluster=False,
+#     cluster_context="the-fury",
+#     config_file="/opt/airflow/.kube/config",
+#     task_id="echo5",
+#     is_delete_operator_pod=False,
+#     service_account_name="default",
+#     dag=dag
+# )
 
 t6 = KubernetesPodOperator(
     namespace=namespace,
@@ -95,21 +95,21 @@ t6 = KubernetesPodOperator(
 
 
 
-t7 = KubernetesPodOperator(
-    namespace=namespace,
-    image="devops-repo.isus.emc.com:8116/nautilus/nautilus-kubectl:1.16.12",
-    cmds=["bash", "-cx"],
-    arguments=["echo $(helm version --client --short)"],
-    name="echo7",
-    in_cluster=False,
-    task_id="echo7",
-    is_delete_operator_pod=False,
-    config_file="/home/virentu/.kube/config",
-    get_logs=True,
-    cluster_context="the-fury",
-    service_account_name="default",
-    dag=dag
-)
+# t7 = KubernetesPodOperator(
+#     namespace=namespace,
+#     image="devops-repo.isus.emc.com:8116/nautilus/nautilus-kubectl:1.16.12",
+#     cmds=["bash", "-cx"],
+#     arguments=["echo $(helm version --client --short)"],
+#     name="echo7",
+#     in_cluster=False,
+#     task_id="echo7",
+#     is_delete_operator_pod=False,
+#     config_file="/home/virentu/.kube/config",
+#     get_logs=True,
+#     cluster_context="the-fury",
+#     service_account_name="default",
+#     dag=dag
+# )
 
 
 t9 = KubernetesPodOperator(
