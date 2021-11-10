@@ -37,7 +37,7 @@ t3 = KubernetesPodOperator(
     namespace=namespace,
     image="vvvirenyu/hello-world:latest",
     cmds=["bash", "-cx"],
-    arguments=["helm install app/helloworld-chart-0.1.0.tgz --name helloworld --namespace=nautilus-airflow"],
+    arguments=["helm install app/helloworld-chart-0.1.0.tgz --name helloworld --namespace nautilus-airflow"],
     name="echo3",
     in_cluster=True,
     task_id="echo3",
