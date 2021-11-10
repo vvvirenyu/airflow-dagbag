@@ -36,7 +36,7 @@ kubeconfig_file = f"{airflow_home}/.kube/config"
 t3 = KubernetesPodOperator(
     namespace=namespace,
     image="vvvirenyu/hello-world:latest",
-    cmds=["bash", "-cx"],
+    cmds=["/bin/bash", "-cx"],
     arguments=["helm install app/helloworld-chart-0.1.0.tgz --name helloworld --namespace nautilus-airflow"],
     name="echo3",
     in_cluster=True,
@@ -128,4 +128,4 @@ t9 = KubernetesPodOperator(
     dag=dag
 )
 
-t3 >> [t4, t5, t6, t7, t9]
+t3 >> [t6, t9]
