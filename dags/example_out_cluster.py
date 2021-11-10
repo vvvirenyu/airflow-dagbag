@@ -36,6 +36,7 @@ kubeconfig_file = f"{airflow_home}/.kube/config"
 t3 = KubernetesPodOperator(
     namespace=namespace,
     image="vvvirenyu/k8py:latest",
+    image_pull_secrets="regcred",
     cmds=["/bin/bash", "-cx"],
     arguments=["helm repo add bitnami https://charts.bitnami.com/bitnami && helm install my-release bitnami/nginx --namespace nautilus-airflow"],
     name="echo3",
