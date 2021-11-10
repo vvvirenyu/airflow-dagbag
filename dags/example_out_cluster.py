@@ -35,9 +35,9 @@ kubeconfig_file = f"{airflow_home}/.kube/config"
 
 t3 = KubernetesPodOperator(
     namespace=namespace,
-    image="alpine/k8s:1.20.7",
+    image="vvvirenyu/hello-world:latest",
     cmds=["bash", "-cx"],
-    arguments=["helm repo add nginx-stable https://helm.nginx.com/stable ; sleep 10 ; helm repo update; sleep 10 ; helm install my-release nginx-stable/nginx-ingress -n nautilus-airflow ; echo done"],
+    arguments=["helm install app/helloworld-chart-0.1.0.tgz --name helloworld --namespace=nautilus-airflow"],
     name="echo3",
     in_cluster=True,
     task_id="echo3",
