@@ -47,19 +47,20 @@ t3 = KubernetesPodOperator(
     dag=dag
 )
 
-t4 = KubernetesPodOperator(
-    namespace=namespace,
-    image="vvvirenyu/k8py:latest",
-    image_pull_secrets="regcred",
-    cmds=["/bin/bash", "-cx"],
-    arguments=["helm init"],
-    name="echo4",
-    in_cluster=True,
-    task_id="echo4",
-    is_delete_operator_pod=False,
-    get_logs=True,
-    dag=dag
-)
+# t4 = KubernetesPodOperator(
+#     namespace=namespace,
+#     image="vvvirenyu/k8py:latest",
+#     image_pull_secrets="regcred",
+#     cmds=["/bin/bash", "-cx"],
+#     arguments=["helm init"],
+#     name="echo4",
+#     in_cluster=True,
+#     task_id="echo4",
+#     is_delete_operator_pod=False,
+#     service_account_name="airflow-release-worker",
+#     get_logs=True,
+#     dag=dag
+# )
 
 
 
@@ -89,6 +90,7 @@ t6 = KubernetesPodOperator(
     in_cluster=True,
     task_id="echo6",
     is_delete_operator_pod=False,
+    service_account_name="airflow-release-worker",
     get_logs=True,
     dag=dag
 )
@@ -124,8 +126,8 @@ t9 = KubernetesPodOperator(
     task_id="echo9",
     is_delete_operator_pod=False,
     get_logs=True,
-    service_account_name="airflow-release-worker",
+    service_account_name="default",
     dag=dag
 )
 
-t3 >> [t4, t6, t9]
+t3 >> [t6, t9]
