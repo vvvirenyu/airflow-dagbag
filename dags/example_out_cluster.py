@@ -90,7 +90,7 @@ t6 = KubernetesPodOperator(
     in_cluster=True,
     task_id="echo6",
     is_delete_operator_pod=False,
-    service_account_name="default",
+    service_account_name="airflow-release-worker",
     get_logs=True,
     dag=dag
 )
