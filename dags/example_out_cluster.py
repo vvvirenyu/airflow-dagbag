@@ -85,12 +85,14 @@ t6 = KubernetesPodOperator(
     image="vvvirenyu/k8py:latest",
     image_pull_secrets="regcred",
     cmds=["bash", "-cx"],
-    arguments=["helm install example helloworld-1.0.0.tgz -n nautilus-airflow"],
+    arguments=["echo $(helm version --client --short)"],
     name="echo6",
-    in_cluster=True,
+    in_cluster=False,
     task_id="echo6",
     is_delete_operator_pod=False,
     service_account_name="airflow-release-worker",
+    cluster_context="sebastian-shaw",
+    config_file="/opt/airflow/.kube/config",
     get_logs=True,
     dag=dag
 )
@@ -114,20 +116,21 @@ t6 = KubernetesPodOperator(
 # )
 
 
-# t9 = KubernetesPodOperator(
-#     namespace=namespace,
-#     image="devops-repo.isus.emc.com:8116/nautilus/nautilus-kubectl:1.16.12",
-#     cmds=["bash", "-cx"],
-#     arguments=["echo $(helm version --client --short)"],
-#     name="echo9",
-#     in_cluster=False,
-#     cluster_context="the-fury",
-#     config_file="/opt/airflow/.kube/config",
-#     task_id="echo9",
-#     is_delete_operator_pod=False,
-#     get_logs=True,
-#     service_account_name="default",
-#     dag=dag
-# )
+t9 = KubernetesPodOperator(
+    namespace=namespace,
+    image="vvvirenyu/k8py:latest",
+    image_pull_secrets="regcred",
+    cmds=["bash", "-cx"],
+    arguments=["echo $(helm version --client --short)"],
+    name="echo9",
+    in_cluster=False,
+    cluster_context="the-fury",
+    config_file="/opt/airflow/.kube/config",
+    task_id="echo9",
+    is_delete_operator_pod=False,
+    get_logs=True,
+    service_account_name="airflow-release-worker",
+    dag=dag
+)
 
-t3 >> t6
+t3 >> [t6, t9]
