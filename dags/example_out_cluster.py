@@ -43,6 +43,7 @@ t3 = KubernetesPodOperator(
     in_cluster=True,
     task_id="echo3",
     is_delete_operator_pod=False,
+    service_account_name="default",
     get_logs=True,
     dag=dag
 )
