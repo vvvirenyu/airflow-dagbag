@@ -91,7 +91,7 @@ t6 = KubernetesPodOperator(
     task_id="echo6",
     is_delete_operator_pod=False,
     service_account_name="airflow-release-worker",
-    cluster_context="sebastian-shaw",
+    cluster_context="the-fury",
     config_file="/opt/airflow/.kube/config",
     get_logs=True,
     dag=dag
@@ -116,21 +116,21 @@ t6 = KubernetesPodOperator(
 # )
 
 
-t9 = KubernetesPodOperator(
-    namespace=namespace,
-    image="vvvirenyu/k8py:latest",
-    image_pull_secrets="regcred",
-    cmds=["bash", "-cx"],
-    arguments=["echo $(helm version --client --short)"],
-    name="echo9",
-    in_cluster=False,
-    cluster_context="the-fury",
-    config_file="/opt/airflow/.kube/config",
-    task_id="echo9",
-    is_delete_operator_pod=False,
-    get_logs=True,
-    service_account_name="airflow-release-worker",
-    dag=dag
-)
+# t9 = KubernetesPodOperator(
+#     namespace=namespace,
+#     image="vvvirenyu/k8py:latest",
+#     image_pull_secrets="regcred",
+#     cmds=["bash", "-cx"],
+#     arguments=["echo $(helm version --client --short)"],
+#     name="echo9",
+#     in_cluster=False,
+#     cluster_context="the-fury",
+#     config_file="/opt/airflow/.kube/config",
+#     task_id="echo9",
+#     is_delete_operator_pod=False,
+#     get_logs=True,
+#     service_account_name="airflow-release-worker",
+#     dag=dag
+# )
 
-t3 >> [t6, t9]
+t3 >> t6
