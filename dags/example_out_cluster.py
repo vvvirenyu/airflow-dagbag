@@ -78,22 +78,22 @@ t3 = KubernetesPodOperator(
 #     dag=dag
 # )
 
-t6 = KubernetesPodOperator(
-    namespace=namespace,
-    image="vvvirenyu/k8py:latest",
-    image_pull_secrets="regcred",
-    cmds=["bash", "-cx"],
-    arguments=["echo $(helm version --client --short)"],
-    name="echo6",
-    in_cluster=False,
-    task_id="echo6",
-    is_delete_operator_pod=False,
-    service_account_name="airflow-release-worker",
-    cluster_context="the-fury",
-    config_file="/opt/airflow/.kube/config",
-    get_logs=True,
-    dag=dag
-)
+# t6 = KubernetesPodOperator(
+#     namespace=namespace,
+#     image="vvvirenyu/k8py:latest",
+#     image_pull_secrets="regcred",
+#     cmds=["bash", "-cx"],
+#     arguments=["echo $(helm version --client --short)"],
+#     name="echo6",
+#     in_cluster=False,
+#     task_id="echo6",
+#     is_delete_operator_pod=False,
+#     service_account_name="airflow-release-worker",
+#     cluster_context="the-fury",
+#     config_file="/opt/airflow/.kube/config",
+#     get_logs=True,
+#     dag=dag
+# )
 
 
 
