@@ -30,15 +30,19 @@ dag = DAG('out-cluster', default_args=default_args, schedule_interval=None)
 # namespace = configuration.conf.get("kubernetes","namespace")
 # config_file="/opt/airflow/.kube/config/out-config",
 namespace = "nautilus-airflow"
+dummyNamespace = "nautilus-airflow-dummy"
 
 t3 = KubernetesPodOperator(
-    namespace=namespace,
+    namespace=dummyNamespace,
     image="vvvirenyu/k8py:latest",
     image_pull_secrets="regcred",
     cmds=["/bin/bash", "-cx"],
-    arguments=["python3 main.py"],
+    arguments=["echo $(helm version --client --short)"],
     name="echo3",
-    in_cluster=True,
+    in_cluster=False,
+    cluster_context="sebastian-shaw",
+    config_file="/opt/airflow/.kube/config",
+    service_account_name="airflow-release-worker",
     task_id="echo3",
     is_delete_operator_pod=False,
     get_logs=True,
@@ -131,4 +135,4 @@ t3 = KubernetesPodOperator(
 #     dag=dag
 # )
 
-t3
+t3 >> [t4, t5] >> t7
