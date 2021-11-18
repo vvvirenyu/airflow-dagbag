@@ -33,7 +33,7 @@ namespace = "nautilus-airflow"
 dummyNamespace = "nautilus-airflow-dummy"
 
 t3 = KubernetesPodOperator(
-    namespace=dummyNamespace,
+    namespace=namespace,
     image="vvvirenyu/k8py:latest",
     image_pull_secrets="regcred",
     cmds=["/bin/bash", "-cx"],
