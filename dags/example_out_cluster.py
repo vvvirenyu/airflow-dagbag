@@ -42,7 +42,6 @@ t3 = KubernetesPodOperator(
     in_cluster=False,
     cluster_context="sebastian-shaw",
     config_file="/opt/airflow/.kube/config",
-    service_account_name="airflow-release-worker",
     task_id="echo3",
     is_delete_operator_pod=False,
     get_logs=True,
