@@ -33,17 +33,16 @@ namespace = "nautilus-airflow"
 dummyNamespace = "nautilus-airflow-dummy"
 
 t3 = KubernetesPodOperator(
-    namespace=namespace,
+    namespace=dummyNamespace,
     image="vvvirenyu/k8py:latest",
     image_pull_secrets="regcred",
     cmds=["/bin/bash", "-cx"],
-    arguments=["echo $(helm version --client --short)"],
+    arguments=["helm install example helloworld-1.0.0.tgz -n nautilus-airflow"],
     name="echo3",
-    in_cluster=False,
-    cluster_context="sebastian-shaw",
-    config_file="/opt/airflow/.kube/config",
+    in_cluster=True,
     task_id="echo3",
     is_delete_operator_pod=False,
+    service_account_name="airflow-release-worker",
     get_logs=True,
     dag=dag
 )
