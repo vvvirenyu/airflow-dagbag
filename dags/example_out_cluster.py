@@ -31,13 +31,15 @@ dag = DAG('out-cluster', default_args=default_args, schedule_interval=None)
 # config_file="/opt/airflow/.kube/config/out-config",
 namespace = "nautilus-airflow"
 dummyNamespace = "nautilus-airflow-dummy"
+echo_helm = "echo $(helm version --client --short)"
+install_helm = "helm install example2 helloworld-1.0.0.tgz -n nautilus-airflow"
 
 t3 = KubernetesPodOperator(
     namespace=namespace,
     image="vvvirenyu/k8py:latest",
     image_pull_secrets="regcred",
     cmds=["/bin/bash", "-cx"],
-    arguments=["helm install example2 helloworld-1.0.0.tgz -n nautilus-airflow"],
+    arguments=[echo_helm],
     name="echo3",
     in_cluster=True,
     task_id="echo3",
@@ -47,21 +49,38 @@ t3 = KubernetesPodOperator(
     dag=dag
 )
 
-# t4 = KubernetesPodOperator(
-#     namespace=namespace,
-#     image="vvvirenyu/k8py:latest",
-#     image_pull_secrets="regcred",
-#     cmds=["/bin/bash", "-cx"],
-#     arguments=["helm init"],
-#     name="echo4",
-#     in_cluster=True,
-#     task_id="echo4",
-#     is_delete_operator_pod=False,
-#     service_account_name="airflow-release-worker",
-#     get_logs=True,
-#     dag=dag
-# )
+t4 = KubernetesPodOperator(
+    namespace=namespace,
+    image="vvvirenyu/k8py:latest",
+    image_pull_secrets="regcred",
+    cmds=["/bin/bash", "-cx"],
+    arguments=[echo_helm],
+    name="echo4",
+    in_cluster=False,
+    cluster_context="slapstick",
+    config_file="/opt/airflow/.kube/config",
+    task_id="echo4",
+    is_delete_operator_pod=False,
+    service_account_name="airflow-host-serviceaccount",
+    get_logs=True,
+    dag=dag
+)
 
+t44 = KubernetesPodOperator(
+    namespace=namespace,
+    image="vvvirenyu/k8py:latest",
+    image_pull_secrets="regcred",
+    cmds=["/bin/bash", "-cx"],
+    arguments=[echo_helm],
+    name="echo44",
+    in_cluster=False,
+    cluster_context="slapstick",
+    config_file="/opt/airflow/.kube/config",
+    task_id="echo44",
+    is_delete_operator_pod=False,
+    get_logs=True,
+    dag=dag
+)
 
 
 
@@ -133,4 +152,4 @@ t3 = KubernetesPodOperator(
 #     dag=dag
 # )
 
-t3
+t3 >> [t4, t44]
