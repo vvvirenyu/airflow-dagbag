@@ -57,7 +57,7 @@ t4 = KubernetesPodOperator(
     arguments=[echo_helm],
     name="echo4",
     in_cluster=False,
-    cluster_context="slapstick",
+    cluster_context="sebastian-shaw",
     config_file="/opt/airflow/.kube/config",
     task_id="echo4",
     is_delete_operator_pod=False,
@@ -74,7 +74,7 @@ t44 = KubernetesPodOperator(
     arguments=[echo_helm],
     name="echo44",
     in_cluster=False,
-    cluster_context="slapstick",
+    cluster_context="sebastian-shaw",
     config_file="/opt/airflow/.kube/config",
     task_id="echo44",
     is_delete_operator_pod=False,
@@ -90,7 +90,7 @@ t55 = KubernetesPodOperator(
     arguments=[echo_helm],
     name="echo55",
     in_cluster=False,
-    cluster_context="slapstick",
+    cluster_context="sebastian-shaw",
     config_file="/opt/airflow/.kube/config",
     task_id="echo55",
     service_account_name="airflow-release-worker",
@@ -107,7 +107,7 @@ t66 = KubernetesPodOperator(
     arguments=[echo_helm],
     name="echo66",
     in_cluster=False,
-    cluster_context="slapstick",
+    cluster_context="sebastian-shaw",
     config_file="/opt/airflow/.kube/config",
     task_id="echo66",
     service_account_name="default",
@@ -186,4 +186,4 @@ t66 = KubernetesPodOperator(
 #     dag=dag
 # )
 
-t3 >> [t4, t44]
+t3 >> [t4, t44, t55, t66]
