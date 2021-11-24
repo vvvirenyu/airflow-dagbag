@@ -44,7 +44,7 @@ t3 = KubernetesPodOperator(
     in_cluster=True,
     task_id="echo3",
     is_delete_operator_pod=False,
-    service_account_name="airflow-release-worker",
+    service_account_name="default",
     get_logs=True,
     dag=dag
 )
@@ -57,14 +57,32 @@ t4 = KubernetesPodOperator(
     arguments=[echo_helm],
     name="echo4",
     in_cluster=False,
-    cluster_context="sebastian-shaw",
+    cluster_context="slapstick",
     config_file="/opt/airflow/.kube/config",
     task_id="echo4",
     is_delete_operator_pod=False,
-    service_account_name="airflow-host-serviceaccount",
+    service_account_name="default",
     get_logs=True,
     dag=dag
 )
+
+t66 = KubernetesPodOperator(
+    namespace=namespace,
+    image="vvvirenyu/k8py:latest",
+    image_pull_secrets="regcred",
+    cmds=["/bin/bash", "-cx"],
+    arguments=[echo_helm],
+    name="echo66",
+    in_cluster=False,
+    cluster_context="sebastian-shaw",
+    config_file="/opt/airflow/.kube/config",
+    task_id="echo66",
+    service_account_name="default",
+    is_delete_operator_pod=False,
+    get_logs=True,
+    dag=dag
+)
+
 
 t44 = KubernetesPodOperator(
     namespace=namespace,
@@ -74,9 +92,10 @@ t44 = KubernetesPodOperator(
     arguments=[echo_helm],
     name="echo44",
     in_cluster=False,
-    cluster_context="sebastian-shaw",
+    cluster_context="slapstick",
     config_file="/opt/airflow/.kube/config",
     task_id="echo44",
+    service_account_name="airflow-release-worker",
     is_delete_operator_pod=False,
     get_logs=True,
     dag=dag
@@ -99,22 +118,6 @@ t55 = KubernetesPodOperator(
     dag=dag
 )
 
-t66 = KubernetesPodOperator(
-    namespace=namespace,
-    image="vvvirenyu/k8py:latest",
-    image_pull_secrets="regcred",
-    cmds=["/bin/bash", "-cx"],
-    arguments=[echo_helm],
-    name="echo66",
-    in_cluster=False,
-    cluster_context="sebastian-shaw",
-    config_file="/opt/airflow/.kube/config",
-    task_id="echo66",
-    service_account_name="default",
-    is_delete_operator_pod=False,
-    get_logs=True,
-    dag=dag
-)
 
 
 
