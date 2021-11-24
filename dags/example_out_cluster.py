@@ -31,7 +31,7 @@ dag = DAG('out-cluster', default_args=default_args, schedule_interval=None)
 # config_file="/opt/airflow/.kube/config/out-config",
 namespace = "nautilus-airflow"
 dummyNamespace = "nautilus-airflow-dummy"
-echo_helm = "echo $(helm version --client --short); sleep 3600"
+echo_helm = "echo $(helm version --client --short); sleep 60"
 install_helm = "helm install example2 helloworld-1.0.0.tgz -n nautilus-airflow"
 
 t3 = KubernetesPodOperator(
