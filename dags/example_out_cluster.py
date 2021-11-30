@@ -187,6 +187,6 @@ t9 = KubernetesPodOperator(
     get_logs=True,
     service_account_name="airflow-release-worker",
     dag=dag
-# )
+)
 
 t3 >> [t4, t44, t5, t6, t7, t9]
