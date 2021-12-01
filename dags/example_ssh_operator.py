@@ -28,7 +28,6 @@ config_remote_host = "{{ dag_run.conf['remote_host'] }}"
 
 ssh_hook_example = SSHHook(
     key_file = config_key_file,
-    no_host_key_check = True,
     username = config_username,
     remote_host = config_remote_host
 )
