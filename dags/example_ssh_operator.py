@@ -34,7 +34,6 @@ ssh_hook_example = SSHHook(
 
 echo_world_task = SSHOperator(
     task_id = "echo world task",
-    name = "echo world task",
     ssh_hook = ssh_hook_example,
     dag = dag,
     command = 'echo "Hello world!"'
