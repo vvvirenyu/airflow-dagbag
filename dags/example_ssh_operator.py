@@ -31,5 +31,5 @@ echo_world_task = SSHOperator(
     task_id = "exampletask",
     ssh_hook = ssh_hook_example,
     dag = dag,
-    command = 'echo "Hello world!" && sleep 120'
+    command = 'kubectl get pods -A && sleep 30'
 )
