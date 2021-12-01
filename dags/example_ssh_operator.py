@@ -21,16 +21,11 @@ dag = DAG('ssh-operator', default_args=default_args, schedule_interval=None)
 # config_private_key = "{{ dag_run.conf['private_key'] }}"
 # config_private_key_passphrase = "{{ dag_run.conf['private_key_passphrase'] }}"
 # config_no_host_key_check = "{{ dag_run.conf['no_host_key_check'] }}"
+# config_key_file = "{{ dag_run.conf['key_file'] }}"
+# config_username = "{{ dag_run.conf['username'] }}"
+# config_remote_host = "{{ dag_run.conf['remote_host'] }}"
 
-config_key_file = "{{ dag_run.conf['key_file'] }}"
-config_username = "{{ dag_run.conf['username'] }}"
-config_remote_host = "{{ dag_run.conf['remote_host'] }}"
-
-ssh_hook_example = SSHHook(
-    key_file = config_key_file,
-    username = config_username,
-    remote_host = config_remote_host
-)
+ssh_hook_example = SSHHook(ssh_conn_id = "airflow_ui_conn")
 
 echo_world_task = SSHOperator(
     task_id = "exampletask",
