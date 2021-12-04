@@ -33,3 +33,15 @@ echo_world_task = SSHOperator(
     dag = dag,
     command = 'kubectl get pods -A && sleep 30'
 )
+
+copy_file_task = SFTPOperator(
+    task_id = "examplecopyfiletask",
+    ssh_hook = ssh_hook_example,
+    local_filepath = '/opt/airflow/.kube/config',
+    remote_filepath = '/home/sdpadmin/Desktop/config',
+    operation="put",
+    dag = dag
+
+)
+
+echo_world_task >> copy_file_task
