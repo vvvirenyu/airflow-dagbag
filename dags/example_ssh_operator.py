@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from airflow import configuration
 from airflow.contrib.operators.ssh_operator import SSHOperator
 from airflow.contrib.hooks.ssh_hook import SSHHook
+from airflow.contrib.operators.sftp_operator import SFTPOperator
 from airflow.models import DAG
 
 default_args = {
