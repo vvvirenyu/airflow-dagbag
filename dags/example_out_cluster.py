@@ -61,7 +61,7 @@ t4 = KubernetesPodOperator(
     config_file="/opt/airflow/.kube/config",
     task_id="echo4",
     is_delete_operator_pod=False,
-    service_account_name="default",
+    service_account_name="airflow-host-serviceaccount",
     get_logs=True,
     dag=dag
 )
@@ -101,22 +101,22 @@ t44 = KubernetesPodOperator(
     dag=dag
 )
 
-t55 = KubernetesPodOperator(
-    namespace=namespace,
-    image="vvvirenyu/k8py:latest",
-    image_pull_secrets="regcred",
-    cmds=["/bin/bash", "-cx"],
-    arguments=[echo_helm],
-    name="echo55",
-    in_cluster=False,
-    cluster_context="cerebro",
-    config_file="/opt/airflow/.kube/config",
-    task_id="echo55",
-    service_account_name="airflow-release-worker",
-    is_delete_operator_pod=False,
-    get_logs=True,
-    dag=dag
-)
+# t55 = KubernetesPodOperator(
+#     namespace=namespace,
+#     image="vvvirenyu/k8py:latest",
+#     image_pull_secrets="regcred",
+#     cmds=["/bin/bash", "-cx"],
+#     arguments=[echo_helm],
+#     name="echo55",
+#     in_cluster=False,
+#     cluster_context="cerebro",
+#     config_file="/opt/airflow/.kube/config",
+#     task_id="echo55",
+#     service_account_name="airflow-release-worker",
+#     is_delete_operator_pod=False,
+#     get_logs=True,
+#     dag=dag
+# )
 
 
 
@@ -189,4 +189,4 @@ t55 = KubernetesPodOperator(
 #     dag=dag
 # )
 
-t3 >> [t4, t44, t66, t55]
+t3 >> [t4, t44, t66]
