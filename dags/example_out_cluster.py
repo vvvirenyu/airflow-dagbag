@@ -49,22 +49,22 @@ t3 = KubernetesPodOperator(
     dag=dag
 )
 
-t4 = KubernetesPodOperator(
-    namespace=namespace,
-    image="vvvirenyu/k8py:latest",
-    image_pull_secrets="regcred",
-    cmds=["/bin/bash", "-cx"],
-    arguments=[echo_helm],
-    name="echo4",
-    in_cluster=False,
-    cluster_context="slapstick",
-    config_file="/opt/airflow/.kube/config",
-    task_id="echo4",
-    is_delete_operator_pod=False,
-    service_account_name="airflow-host-serviceaccount",
-    get_logs=True,
-    dag=dag
-)
+# t4 = KubernetesPodOperator(
+#     namespace=namespace,
+#     image="vvvirenyu/k8py:latest",
+#     image_pull_secrets="regcred",
+#     cmds=["/bin/bash", "-cx"],
+#     arguments=[echo_helm],
+#     name="echo4",
+#     in_cluster=False,
+#     cluster_context="slapstick",
+#     config_file="/opt/airflow/.kube/config",
+#     task_id="echo4",
+#     is_delete_operator_pod=False,
+#     service_account_name="airflow-host-serviceaccount",
+#     get_logs=True,
+#     dag=dag
+# )
 
 t66 = KubernetesPodOperator(
     namespace=namespace,
@@ -84,22 +84,22 @@ t66 = KubernetesPodOperator(
 )
 
 
-t44 = KubernetesPodOperator(
-    namespace=namespace,
-    image="vvvirenyu/k8py:latest",
-    image_pull_secrets="regcred",
-    cmds=["/bin/bash", "-cx"],
-    arguments=[echo_helm],
-    name="echo44",
-    in_cluster=False,
-    cluster_context="slapstick",
-    config_file="/opt/airflow/.kube/config",
-    task_id="echo44",
-    service_account_name="airflow-release-worker",
-    is_delete_operator_pod=False,
-    get_logs=True,
-    dag=dag
-)
+# t44 = KubernetesPodOperator(
+#     namespace=namespace,
+#     image="vvvirenyu/k8py:latest",
+#     image_pull_secrets="regcred",
+#     cmds=["/bin/bash", "-cx"],
+#     arguments=[echo_helm],
+#     name="echo44",
+#     in_cluster=False,
+#     cluster_context="slapstick",
+#     config_file="/opt/airflow/.kube/config",
+#     task_id="echo44",
+#     service_account_name="airflow-release-worker",
+#     is_delete_operator_pod=False,
+#     get_logs=True,
+#     dag=dag
+# )
 
 # t55 = KubernetesPodOperator(
 #     namespace=namespace,
@@ -189,4 +189,4 @@ t44 = KubernetesPodOperator(
 #     dag=dag
 # )
 
-t3 >> [t4, t44, t66]
+t3 >> [t66]
