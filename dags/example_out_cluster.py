@@ -28,14 +28,36 @@ default_args = {
 
 dag = DAG('out-cluster', default_args=default_args, schedule_interval=None)
 
-# namespace = configuration.conf.get("kubernetes","namespace")
-# config_file="/opt/airflow/.kube/config/out-config",
 namespace = "nautilus-airflow"
-dummyNamespace = "nautilus-airflow-dummy"
-echo_helm = "echo $(helm version --client --short); sleep 5"
-install_helm = "helm install example2 helloworld-1.0.0.tgz -n nautilus-airflow"
+echo_helm = "echo $(helm version --client --short); sleep 2"
 
-t3 = KubernetesPodOperator(
+
+ubuntu_image_task = KubernetesPodOperator(
+    namespace=namespace,
+    image="ubuntu:16.04",
+    cmds=["bash", "-cx"],
+    arguments=["echo", "Hello world"],
+    name="echo",
+    in_cluster=True,
+    task_id="echo",
+    is_delete_operator_pod=True,
+    dag=dag
+)
+
+rhel_image_task = KubernetesPodOperator(
+    namespace=namespace,
+    image="registry.access.redhat.com/rhscl/python-36-rhel7",
+    cmds=["bash", "-cx"],
+    arguments=["echo", "Hello world"],
+    name="python-version",
+    in_cluster=True,
+    task_id="pythonversion",
+    is_delete_operator_pod=True,
+    dag=dag
+)
+
+
+incluster_task = KubernetesPodOperator(
     namespace=namespace,
     image="vvvirenyu/k8py:latest",
     image_pull_secrets="regcred",
@@ -50,24 +72,8 @@ t3 = KubernetesPodOperator(
     dag=dag
 )
 
-# t4 = KubernetesPodOperator(
-#     namespace=namespace,
-#     image="vvvirenyu/k8py:latest",
-#     image_pull_secrets="regcred",
-#     cmds=["/bin/bash", "-cx"],
-#     arguments=[echo_helm],
-#     name="echo4",
-#     in_cluster=False,
-#     cluster_context="slapstick",
-#     config_file="/opt/airflow/.kube/config",
-#     task_id="echo4",
-#     is_delete_operator_pod=False,
-#     service_account_name="airflow-host-serviceaccount",
-#     get_logs=True,
-#     dag=dag
-# )
 
-t66 = KubernetesPodOperator(
+outcluster_task = KubernetesPodOperator(
     namespace=namespace,
     image="vvvirenyu/k8py:latest",
     image_pull_secrets="regcred",
@@ -84,117 +90,4 @@ t66 = KubernetesPodOperator(
     dag=dag
 )
 
-t555 = BashOperator(
-    task_id = "bashtask",
-    name = "bashtask",
-    bash_command = "kubectl get pods -n nautilus-airflow",
-    executor_config = {'KubernetesExecutor': {'in_cluster': 'True' }},
-    dag = dag
-)
-
-# t44 = KubernetesPodOperator(
-#     namespace=namespace,
-#     image="vvvirenyu/k8py:latest",
-#     image_pull_secrets="regcred",
-#     cmds=["/bin/bash", "-cx"],
-#     arguments=[echo_helm],
-#     name="echo44",
-#     in_cluster=False,
-#     cluster_context="slapstick",
-#     config_file="/opt/airflow/.kube/config",
-#     task_id="echo44",
-#     service_account_name="airflow-release-worker",
-#     is_delete_operator_pod=False,
-#     get_logs=True,
-#     dag=dag
-# )
-
-# t55 = KubernetesPodOperator(
-#     namespace=namespace,
-#     image="vvvirenyu/k8py:latest",
-#     image_pull_secrets="regcred",
-#     cmds=["/bin/bash", "-cx"],
-#     arguments=[echo_helm],
-#     name="echo55",
-#     in_cluster=False,
-#     cluster_context="cerebro",
-#     config_file="/opt/airflow/.kube/config",
-#     task_id="echo55",
-#     service_account_name="airflow-release-worker",
-#     is_delete_operator_pod=False,
-#     get_logs=True,
-#     dag=dag
-# )
-
-
-
-
-# t5 = KubernetesPodOperator(
-#     namespace=namespace,
-#     image="devops-repo.isus.emc.com:8116/nautilus/nautilus-kubectl:1.16.12",
-#     cmds=["bash", "-cx"],
-#     arguments=["echo $(helm version --client --short)"],
-#     name="echo5",
-#     in_cluster=False,
-#     cluster_context="slapstick",
-#     config_file="/opt/airflow/.kube/config",
-#     task_id="echo5",
-#     is_delete_operator_pod=False,
-#     service_account_name="default",
-#     dag=dag
-# )
-
-# t6 = KubernetesPodOperator(
-#     namespace=namespace,
-#     image="vvvirenyu/k8py:latest",
-#     image_pull_secrets="regcred",
-#     cmds=["bash", "-cx"],
-#     arguments=["echo $(helm version --client --short)"],
-#     name="echo6",
-#     in_cluster=False,
-#     task_id="echo6",
-#     is_delete_operator_pod=False,
-#     service_account_name="airflow-release-worker",
-#     cluster_context="slapstick",
-#     config_file="/opt/airflow/.kube/config",
-#     get_logs=True,
-#     dag=dag
-# )
-
-
-
-# t7 = KubernetesPodOperator(
-#     namespace=namespace,
-#     image="devops-repo.isus.emc.com:8116/nautilus/nautilus-kubectl:1.16.12",
-#     cmds=["bash", "-cx"],
-#     arguments=["echo $(helm version --client --short)"],
-#     name="echo7",
-#     in_cluster=False,
-#     task_id="echo7",
-#     is_delete_operator_pod=False,
-#     config_file="/home/virentu/.kube/config",
-#     get_logs=True,
-#     cluster_context="slapstick",
-#     service_account_name="default",
-#     dag=dag
-# )
-
-
-# t9 = KubernetesPodOperator(
-#     namespace=namespace,
-#     image="vvvirenyu/k8py:latest",
-#     image_pull_secrets="regcred",
-#     cmds=["bash", "-cx"],
-#     arguments=["echo $(helm version --client --short)"],
-#     name="echo9",
-#     in_cluster=False,
-#     cluster_context="slapstick",
-#     config_file="/opt/airflow/.kube/config",
-#     task_id="echo9",
-#     is_delete_operator_pod=False,
-#     get_logs=True,
-#     service_account_name="airflow-release-worker",
-#     dag=dag
-# )
-
-t3 >> [t66, t555]
+[ubuntu_image_task, rhel_image_task, incluster_task, outcluster_task]

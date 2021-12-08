@@ -10,7 +10,7 @@ from airflow.example_dags.libs.helper import print_stuff
 from airflow.operators.python import PythonOperator
 
 with DAG(
-    dag_id='example_kubernetes_executor_38',
+    dag_id='example_kubernetes_executor',
     schedule_interval=None,
     start_date=datetime(2021, 1, 1),
     catchup=False,
@@ -32,19 +32,17 @@ with DAG(
     tolerations = [{'key': 'dedicated', 'operator': 'Equal', 'value': 'airflow'}]
 
 
-    # You don't have to use any special KubernetesExecutor configuration if you don't want to
     start_task = PythonOperator(task_id="start_task", python_callable=print_stuff)
 
-    # But you can if you want to
-    one_task = PythonOperator(
+    change_worker_pod_airflow_tag = PythonOperator(
         task_id="one_task",
         python_callable=print_stuff,
-        executor_config={"KubernetesExecutor": {"image": "apache/airflow:2.2.0-python3.8"}},
+        executor_config={"KubernetesExecutor": {"image": "apache/airflow:2.2.0-python3.9"}},
     )
 
     # Limit resources on this operator/task with node affinity & tolerations
-    two_task = PythonOperator(
-        task_id="three_task",
+    change_worker_pod_resource_specs = PythonOperator(
+        task_id="two_task",
         python_callable=print_stuff,
         executor_config={
             "KubernetesExecutor": {
@@ -57,10 +55,10 @@ with DAG(
     )
 
     # Add arbitrary labels to worker pods
-    three_task = PythonOperator(
-        task_id="four_task",
+    add_worker_pod_label = PythonOperator(
+        task_id="three_task",
         python_callable=print_stuff,
         executor_config={"KubernetesExecutor": {"labels": {"foo": "bar"}}},
     )
 
-    start_task >> [one_task, two_task, three_task]
+    start_task >> [change_worker_pod_airflow_tag, change_worker_pod_resource_specs, add_worker_pod_label]

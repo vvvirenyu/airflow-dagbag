@@ -28,7 +28,7 @@ dag = DAG('ssh-operator', default_args=default_args, schedule_interval=None)
 
 ssh_hook_example = SSHHook(ssh_conn_id = "airflow_ui_conn")
 
-echo_world_task = SSHOperator(
+remote_task = SSHOperator(
     task_id = "exampletask",
     ssh_hook = ssh_hook_example,
     dag = dag,
@@ -45,4 +45,4 @@ copy_file_task = SFTPOperator(
 
 )
 
-echo_world_task >> copy_file_task
+remote_task >> copy_file_task
