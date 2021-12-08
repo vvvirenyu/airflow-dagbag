@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 
 from airflow import configuration
 from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
+from airflow.operators.bash_operator import BashOperator
 from airflow.models import DAG
 import os
 
@@ -83,6 +84,12 @@ t66 = KubernetesPodOperator(
     dag=dag
 )
 
+t555 = BashOperator(
+    task_id = "bash",
+    bash_command = "kubectl get pods -n nautilus-airflow",
+    executor_config = {'KubernetesExecutor': {'in_cluster': 'True' }}
+    dag = dag
+)
 
 # t44 = KubernetesPodOperator(
 #     namespace=namespace,
