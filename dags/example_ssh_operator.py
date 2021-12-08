@@ -17,7 +17,7 @@ default_args = {
     'retry_delay': timedelta(days=30),
 }
 
-dag = DAG('ssh-operator', default_args=default_args, schedule_interval=None)
+dag = DAG('example_ssh_operator', default_args=default_args, schedule_interval=None)
 
 # config_private_key = "{{ dag_run.conf['private_key'] }}"
 # config_private_key_passphrase = "{{ dag_run.conf['private_key_passphrase'] }}"

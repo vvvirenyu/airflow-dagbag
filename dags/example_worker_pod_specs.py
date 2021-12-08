@@ -10,7 +10,7 @@ from airflow.example_dags.libs.helper import print_stuff
 from airflow.operators.python import PythonOperator
 
 with DAG(
-    dag_id='example_kubernetes_executor',
+    dag_id='example_update_worker_pod_specs',
     schedule_interval=None,
     start_date=datetime(2021, 1, 1),
     catchup=False,

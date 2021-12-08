@@ -26,7 +26,7 @@ default_args = {
     # 'end_date': datetime(2016, 1, 1),
 }
 
-dag = DAG('out-cluster', default_args=default_args, schedule_interval=None)
+dag = DAG('example_kube_pod_operator', default_args=default_args, schedule_interval=None)
 
 namespace = "nautilus-airflow"
 echo_helm = "echo $(helm version --client --short); sleep 2"
