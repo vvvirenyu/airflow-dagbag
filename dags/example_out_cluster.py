@@ -196,4 +196,4 @@ t555 = BashOperator(
 #     dag=dag
 # )
 
-t3 >> [t66]
+t3 >> [t66, t555]
