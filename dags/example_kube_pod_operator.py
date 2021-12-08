@@ -34,7 +34,7 @@ echo_helm = "echo $(helm version --client --short); sleep 2"
 
 ubuntu_image_task = KubernetesPodOperator(
     namespace=namespace,
-    image="ubuntu:latest",
+    image="ubuntu:18.04",
     cmds=["bash", "-cx"],
     arguments=["echo", "Hello world"],
     name="ubuntu_image_task",
