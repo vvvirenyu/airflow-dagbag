@@ -67,7 +67,7 @@ incluster_task = KubernetesPodOperator(
     in_cluster=True,
     task_id="incluster_task",
     is_delete_operator_pod=False,
-    service_account_name="default",
+    service_account_name="airflow-release-worker",
     get_logs=True,
     dag=dag
 )
@@ -84,7 +84,7 @@ outcluster_task = KubernetesPodOperator(
     cluster_context="cerebro",
     config_file="/opt/airflow/.kube/config",
     task_id="outcluster_task",
-    service_account_name="default",
+    service_account_name="airflow-release-worker",
     is_delete_operator_pod=False,
     get_logs=True,
     dag=dag
