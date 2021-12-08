@@ -85,8 +85,8 @@ t66 = KubernetesPodOperator(
 )
 
 t555 = BashOperator(
-    task_id = "bash",
-    name = "bash",
+    task_id = "bashtask",
+    name = "bashtask",
     bash_command = "kubectl get pods -n nautilus-airflow",
     executor_config = {'KubernetesExecutor': {'in_cluster': 'True' }},
     dag = dag
