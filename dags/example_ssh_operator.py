@@ -29,14 +29,14 @@ dag = DAG('example_ssh_operator', default_args=default_args, schedule_interval=N
 ssh_hook_example = SSHHook(ssh_conn_id = "airflow_ui_conn")
 
 remote_task = SSHOperator(
-    task_id = "exampletask",
+    task_id = "remote_task",
     ssh_hook = ssh_hook_example,
     dag = dag,
     command = 'kubectl get pods -A && sleep 30'
 )
 
 copy_file_task = SFTPOperator(
-    task_id = "examplecopyfiletask",
+    task_id = "copy_file_task",
     ssh_hook = ssh_hook_example,
     local_filepath = '/opt/airflow/.kube/config',
     remote_filepath = '/home/sdpadmin/Desktop/config',

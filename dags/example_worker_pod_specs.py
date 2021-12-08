@@ -35,14 +35,14 @@ with DAG(
     start_task = PythonOperator(task_id="start_task", python_callable=print_stuff)
 
     change_worker_pod_airflow_tag = PythonOperator(
-        task_id="one_task",
+        task_id="change_worker_pod_airflow_tag",
         python_callable=print_stuff,
         executor_config={"KubernetesExecutor": {"image": "apache/airflow:2.2.0-python3.9"}},
     )
 
     # Limit resources on this operator/task with node affinity & tolerations
     change_worker_pod_resource_specs = PythonOperator(
-        task_id="two_task",
+        task_id="change_worker_pod_resource_specs",
         python_callable=print_stuff,
         executor_config={
             "KubernetesExecutor": {
@@ -56,7 +56,7 @@ with DAG(
 
     # Add arbitrary labels to worker pods
     add_worker_pod_label = PythonOperator(
-        task_id="three_task",
+        task_id="add_worker_pod_label",
         python_callable=print_stuff,
         executor_config={"KubernetesExecutor": {"labels": {"foo": "bar"}}},
     )
