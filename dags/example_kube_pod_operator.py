@@ -29,7 +29,7 @@ default_args = {
 dag = DAG('example_kube_pod_operator', default_args=default_args, schedule_interval=None)
 
 namespace = "nautilus-airflow"
-echo_helm = "echo $(helm version --client --short); sleep 2"
+echo_helm = "echo $(helm version --client --short); sleep 20"
 
 
 ubuntu_image_task = KubernetesPodOperator(
@@ -48,7 +48,7 @@ rhel_image_task = KubernetesPodOperator(
     namespace=namespace,
     image="registry.access.redhat.com/rhscl/python-36-rhel7",
     cmds=["bash", "-cx"],
-    arguments=["echo", "Hello world"],
+    arguments=['echo "Hello world"; sleep 20'],
     name="rhel_image_task",
     in_cluster=True,
     task_id="rhel_image_task",
