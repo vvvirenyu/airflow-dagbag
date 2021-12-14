@@ -29,7 +29,7 @@ default_args = {
 dag = DAG('example_kube_pod_operator', default_args=default_args, schedule_interval=None)
 
 namespace = "nautilus-airflow"
-echo_helm = "echo $(helm version --client --short); sleep 20"
+echo_helm = "echo $(helm version --client --short); sleep 20; echo 'done'"
 
 
 ubuntu_image_task = KubernetesPodOperator(
